@@ -1,0 +1,12 @@
+.seat {
+    height: 30px;
+    width: 75px;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center; /* Center text horizontally */
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+}
