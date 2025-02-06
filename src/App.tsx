@@ -1,16 +1,28 @@
-import { useEffect } from "react";
-import get_seating from "./context/get_seating"; // Removed `.ts`
+import { useEffect, useState } from "react";
+import get_seating from "./context/get_seating";
+import OutlineTable from "./components/outline";
 import "./App.css";
 
 function App() {
+    const [seating_plan, setSeatingPlan] = useState<any>(undefined);
 
-  let seating_plan = undefined;
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await get_seating();
+            setSeatingPlan(data);
+        };
+        fetchData();
+    }, []);
 
-  useEffect(() => {
-    seating_plan = get_seating();
-  }, []);
-
-  return <></>;
+    return (
+        <>
+            {seating_plan ? (
+                <OutlineTable seating_plan={seating_plan.classrooms["Class A"]} />
+            ) : (
+                <div>Loading...</div>
+            )}
+        </>
+    );
 }
 
 export default App;

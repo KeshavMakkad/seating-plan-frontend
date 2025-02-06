@@ -11,6 +11,7 @@ const get_seating = async (): Promise<void> => {
     try {
         const response = await axios.get(SEATING_URI);
         console.log("Seating Data:", response.data);
+        return response.data
     } catch (error) {
         console.error("Error fetching seating:", error);
     }
