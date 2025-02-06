@@ -1,16 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect } from "react";
+import get_seating from "./context/get_seating"; // Removed `.ts`
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      
-    </>
-  )
+  let seating_plan = undefined;
+
+  useEffect(() => {
+    seating_plan = get_seating();
+  }, []);
+
+  return <></>;
 }
 
-export default App
+export default App;
