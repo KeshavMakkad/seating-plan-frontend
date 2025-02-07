@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import get_seating from "./context/get_seating";
-import OutlineTable from "./components/outline";
+import OutlineTable from "./components/Outline";
 import "./App.css";
 
 function App() {
