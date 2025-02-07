@@ -4,10 +4,10 @@ const OutlineTable = ({ seating_plan }: any) => {
     let classToggle = true;
 
     return (
-        <div className="overflow-auto max-h-[1000vh] w-[100vw] min-h-full">
+        <div className="overflow-auto max-h-[1000vh] w-[100vw] min-h-full ">
             <table className="relative overflow-auto w-[100vw] border border-gray-700">
                 <thead className="relative">
-                    <tr className="text-center sticky-header-row top-0 bg-gray-900 text-white">
+                    <tr className="text-center sticky-header-row top-0 bg-gray-900 text-white static top-0 w-[100%]">
                         <th className="sticky left-0 bg-gray-800 text-white p-2">
                             Row
                         </th>

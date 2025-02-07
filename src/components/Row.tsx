@@ -10,7 +10,7 @@ const Row: React.FC<BuildRow> = ({ rowNumber, seating_plan }) => {
     let classToggle = false;
     return (
         <tr>
-            <td className="sticky left-0 bg-gray-500 opacity-100">
+            <td className="sticky left-0 text-center bg-gray-500 opacity-100">
                 {rowNumber}
             </td>
             {Object.keys(seating_plan).map((key) => {
@@ -26,7 +26,9 @@ const Row: React.FC<BuildRow> = ({ rowNumber, seating_plan }) => {
                     >
                         <div className="flex justify-evenly">
                             {deskSeating.map((email: string) => {
-                                return <ProfileCard email={email} />;
+                                return (
+                                    <ProfileCard email={email} column={key} />
+                                );
                                 // return email + " ";
                             })}
                             {/* {deskSeating.length} */}
