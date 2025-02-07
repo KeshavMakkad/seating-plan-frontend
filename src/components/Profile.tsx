@@ -5,7 +5,7 @@ interface ProfileCardProps {
     column: string;
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ email, column }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ email }) => {
     const split = email.split(".");
     let name = split[0].trim(); // Ensure no leading/trailing spaces
     name = name === "" ? "Blank" : name.toUpperCase(); // Set "Blank" if empty

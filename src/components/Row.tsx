@@ -6,7 +6,7 @@ interface BuildRow {
 }
 
 const Row: React.FC<BuildRow> = ({ rowNumber, seating_plan }) => {
-    let index: number = 0;
+    // let index: number = 0;
     let classToggle = false;
     return (
         <tr>
@@ -16,7 +16,7 @@ const Row: React.FC<BuildRow> = ({ rowNumber, seating_plan }) => {
             {Object.keys(seating_plan).map((key) => {
                 classToggle = !classToggle;
                 let firstColumn = key;
-                let numberOfDesks = seating_plan[firstColumn][0];
+                // let numberOfDesks = seating_plan[firstColumn][0];
                 let deskSeating = seating_plan[firstColumn][1][rowNumber];
                 return (
                     <td
