@@ -17,7 +17,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ email }) => {
         rollNumber = split[1].slice(5, 10);
     }
 
-    if (name !== "Blank") {
+    if (name !== "Blank" && name !== "N/A") {
         return (
             <>
                 <div
