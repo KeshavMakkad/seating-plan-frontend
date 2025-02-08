@@ -3,9 +3,10 @@ import ProfileCard from "./Profile";
 interface BuildRow {
     rowNumber: number;
     seating_plan: { [key: string]: any[] };
+    searchQuery: string;
 }
 
-const Row: React.FC<BuildRow> = ({ rowNumber, seating_plan }) => {
+const Row: React.FC<BuildRow> = ({ rowNumber, seating_plan, searchQuery }) => {
     // let index: number = 0;
     let classToggle = false;
     return (
@@ -27,7 +28,11 @@ const Row: React.FC<BuildRow> = ({ rowNumber, seating_plan }) => {
                         <div className="flex justify-evenly">
                             {deskSeating.map((email: string) => {
                                 return (
-                                    <ProfileCard email={email} column={key} />
+                                    <ProfileCard
+                                        email={email}
+                                        column={key}
+                                        searchQuery={searchQuery}
+                                    />
                                 );
                                 // return email + " ";
                             })}

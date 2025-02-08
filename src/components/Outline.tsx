@@ -1,10 +1,14 @@
 import Row from "./Row";
+import SearchBar from "./SearchBar";
+import { useState } from "react";
 
 const OutlineTable = ({ seating_plan }: any) => {
+    const [searchQuery, setSearchQuery] = useState("");
     let classToggle = true;
 
     return (
-        <div className="overflow-auto max-h-[1000vh] w-[100vw] min-h-full ">
+        <div className="overflow-auto max-h-[100vh] w-[100vw] min-h-full ">
+            <SearchBar onSearch={setSearchQuery} />
             <table className="relative overflow-auto w-[100vw] border border-gray-700">
                 <thead className="relative">
                     <tr className="text-center sticky-header-row top-0 bg-gray-900 text-white static top-0 w-[100%]">
@@ -36,6 +40,7 @@ const OutlineTable = ({ seating_plan }: any) => {
                             key={rowIndex}
                             rowNumber={rowIndex}
                             seating_plan={seating_plan}
+                            searchQuery={searchQuery}
                         />
                     ))}
                 </tbody>

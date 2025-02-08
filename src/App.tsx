@@ -17,7 +17,9 @@ function App() {
     return (
         <>
             {seating_plan ? (
-                <OutlineTable seating_plan={seating_plan.classrooms["Class A"]} />
+                <OutlineTable
+                    seating_plan={seating_plan.classrooms["Class A"]}
+                />
             ) : (
                 <div>Loading...</div>
             )}

@@ -3,9 +3,10 @@ import { Avatar } from "@mui/material";
 interface ProfileCardProps {
     email: string;
     column: string;
+    searchQuery: string;
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ email }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ email, searchQuery }) => {
     const split = email.split(".");
     let name = split[0].trim(); // Ensure no leading/trailing spaces
     name = name === "" ? "Blank" : name.toUpperCase(); // Set "Blank" if empty
@@ -17,16 +18,24 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ email }) => {
         rollNumber = split[1].slice(5, 10);
     }
 
+    const isHighlighted =
+        searchQuery &&
+        `${name} ${rollNumber}`.includes(searchQuery.toUpperCase());
+
     if (name !== "Blank" && name !== "N/A") {
         return (
             <>
                 <div
                     id={`${name} ${rollNumber}`}
-                    className="seat w-[100px] h-[100px] flex flex-col justify-center items-center border border-white-500 rounded-lg m-[1rem]"
+                    className={`1seat w-[100px] h-[100px] flex flex-col justify-center items-center border-2 border-gray-500 rounded-lg m-[1rem] ${
+                        isHighlighted
+                            ? "bg-yellow-400 text-black font-bold"
+                            : ""
+                    }`}
                 >
                     <Avatar className="w-[2rem] h-[2rem]">{initials}</Avatar>
                     <span
-                        className={`text-[10px] text-ellipsis ${"opacity-100"}`}
+                        className={`text-[11px] text-ellipsis ${"opacity-100"}`}
                     >
                         {name} - {rollNumber}
                     </span>
