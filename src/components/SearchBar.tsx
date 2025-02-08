@@ -22,13 +22,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     };
 
     return (
-        <div className="fixed top-0 left-0 w-full flex justify-center my-4 z-50">
+        <div className="w-full max-w-xs">
             <TextField
                 variant="outlined"
                 placeholder="Search by name or roll number..."
                 value={searchQuery}
                 onChange={handleSearch}
-                className="w-full max-w-4xl bg-white rounded-lg shadow-sm border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                className="w-full bg-white rounded-md shadow-sm border border-gray-300 focus:ring-2 focus:ring-blue-400"
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
