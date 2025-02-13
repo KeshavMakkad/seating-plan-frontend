@@ -1,9 +1,6 @@
 "use client";
 
 import Row from "./Row";
-// import SearchBar from "./SearchBar";
-// import { useState } from "react";
-
 const OutlineTable = ({
     seatingPlan,
     searchQuery,
