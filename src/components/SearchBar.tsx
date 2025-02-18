@@ -13,7 +13,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const query = event.target.value;
         setSearchQuery(query);
-        onSearch(query);
+        onSearch(query.trim());
     };
 
     const clearSearch = () => {

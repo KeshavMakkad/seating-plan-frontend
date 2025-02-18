@@ -38,6 +38,46 @@ const SeatingPlan = () => {
         setSelectedClass(cls);
     };
 
+    const handleSearch = (query: string) => {
+        setSearchQuery(query);
+        
+        if (query) {
+            setTimeout(() => {
+                const searchText = query.toUpperCase().trim();
+                
+                const nameMatch = searchText.match(/^([A-Z]+)/);
+                const idMatch = searchText.match(/^(\d+)/);
+                
+                let elements = null;
+                
+                if (nameMatch) {
+                    const searchName = nameMatch[1];
+                    elements = document.querySelectorAll(`[id^="student-${searchName}"]`);
+                } else if (idMatch) {
+                    const searchId = idMatch[1];
+                    elements = document.querySelectorAll(`[id$="-${searchId}"]`);
+                }
+                
+                if (elements && elements.length > 0) {
+                    const element = elements[0];
+                    const cell = element.closest('td');
+                    if (cell) {
+                        cell.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center',
+                            inline: 'center'
+                        });
+                    }
+                    
+                    element.classList.add('scale-110');
+                    setTimeout(() => {
+                        element.classList.remove('scale-110');
+                    }, 1000);
+                }
+            }, 100);
+        }
+    };
+
     return (
         <div className="flex flex-col h-screen">
             {seatingPlan && classes.length > 0 ? (
@@ -46,10 +86,10 @@ const SeatingPlan = () => {
                         classes={classes}
                         selectedClass={selectedClass}
                         onClassChange={handleClassChange}
-                        onSearch={setSearchQuery}
+                        onSearch={handleSearch}
                     />
 
-                    <div className="flex-grow overflow-auto">
+                    <div className="flex-grow overflow-auto relative">
                         <OutlineTable
                             seatingPlan={seatingPlan.classrooms[selectedClass]}
                             searchQuery={searchQuery}
