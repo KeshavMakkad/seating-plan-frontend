@@ -20,41 +20,36 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ email, searchQuery }) => {
 
     const isHighlighted =
         searchQuery &&
-        `${name} ${rollNumber}`.includes(searchQuery.toUpperCase());
+        `${name} ${rollNumber}`.toLowerCase().includes(searchQuery.toLowerCase());
 
     if (name !== "Blank" && name !== "N/A") {
+        const elementId = `student-${name}-${rollNumber}`.replace(/\s+/g, '-');
+        
         return (
-            <>
-                <div
-                    id={`${name} ${rollNumber}`}
-                    className={`1seat w-[100px] h-[100px] flex flex-col justify-center items-center border-2 border-gray-500 rounded-lg m-[1rem] ${
-                        isHighlighted
-                            ? "bg-yellow-400 text-black font-bold"
-                            : ""
-                    }`}
-                >
-                    <Avatar className="w-[2rem] h-[2rem]">{initials}</Avatar>
-                    <span
-                        className={`text-[11px] text-ellipsis ${"opacity-100"}`}
-                    >
-                        {name} - {rollNumber}
-                    </span>
-                </div>
-            </>
+            <div
+                id={elementId}
+                className={`seat w-[100px] h-[100px] flex flex-col justify-center items-center border-2 transition-transform duration-300 ${
+                    isHighlighted
+                        ? "bg-yellow-400 text-black font-bold shadow-lg"
+                        : "border-gray-500"
+                } rounded-lg m-[1rem]`}
+            >
+                <Avatar className="w-[2rem] h-[2rem]">{initials}</Avatar>
+                <span className="text-[11px] text-ellipsis">
+                    {name} - {rollNumber}
+                </span>
+            </div>
         );
     } else {
         return (
-            <>
-                <div
-                    id={`${name} ${rollNumber}`}
-                    className="seat w-[100px] h-[100px] flex flex-col justify-center items-center border border-white-500 rounded-lg m-[1rem] opacity-15"
-                >
-                    <Avatar className="w-[2rem] h-[2rem]">{initials}</Avatar>
-                    <span className={`text-[10px]  ${"opacity-100"}`}>
-                        {name}
-                    </span>
-                </div>
-            </>
+            <div
+                className="seat w-[100px] h-[100px] flex flex-col justify-center items-center border border-white-500 rounded-lg m-[1rem] opacity-15"
+            >
+                <Avatar className="w-[2rem] h-[2rem]">{initials}</Avatar>
+                <span className="text-[10px]">
+                    {name}
+                </span>
+            </div>
         );
     }
 };
