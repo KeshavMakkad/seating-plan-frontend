@@ -10,13 +10,12 @@ const SeatingPlan = () => {
     const [selectedClass, setSelectedClass] = useState<string>("");
     const [searchQuery, setSearchQuery] = useState("");
 
-    // Fetch seating plan data
     useEffect(() => {
         const fetchData = async () => {
             if (name) {
                 const data = await fetchSeating(name);
                 setSeatingPlan(data.data);
-                
+
             } else {
                 console.error("Name is undefined, cannot fetch seating data.");
             }
@@ -24,7 +23,6 @@ const SeatingPlan = () => {
         fetchData();
     }, []);
 
-    // Extract classroom names
     useEffect(() => {
         if (seatingPlan?.classrooms) {
             const classroomNames = Object.keys(seatingPlan.classrooms);
