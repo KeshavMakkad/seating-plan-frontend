@@ -38,41 +38,100 @@ const SeatingPlan = () => {
         setSelectedClass(cls);
     };
 
-    const handleSearch = (query: string) => {
-        setSearchQuery(query);
+    const sameClassSearch = (query: string) => {
+        if (!query) return;
         
-        if (query) {
-            setTimeout(() => {
-                const searchText = query.toUpperCase().trim();
+        const searchText = query.toUpperCase().trim();
+        const nameMatch = searchText.match(/^([A-Z]+)/);
+        const idMatch = searchText.match(/^(\d+)/);
+        
+        let elements = null;
+        
+        if (nameMatch) {
+            const searchName = nameMatch[1];
+            elements = document.querySelectorAll(`[id^="student-${searchName}"]`);
+        } else if (idMatch) {
+            const searchId = idMatch[1];
+            elements = document.querySelectorAll(`[id$="-${searchId}"]`);
+        }
+        
+        if (elements && elements.length > 0) {
+            const element = elements[0];
+            const cell = element.closest('td');
+            if (cell) {
+                cell.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center',
+                    inline: 'center'
+                });
                 
-                const nameMatch = searchText.match(/^([A-Z]+)/);
-                const idMatch = searchText.match(/^(\d+)/);
-                
-                let elements = null;
-                
-                if (nameMatch) {
-                    const searchName = nameMatch[1];
-                    elements = document.querySelectorAll(`[id^="student-${searchName}"]`);
-                } else if (idMatch) {
-                    const searchId = idMatch[1];
-                    elements = document.querySelectorAll(`[id$="-${searchId}"]`);
-                }
-                
-                if (elements && elements.length > 0) {
-                    const element = elements[0];
-                    const cell = element.closest('td');
-                    if (cell) {
+                element.classList.add('scale-110');
+                setTimeout(() => {
+                    element.classList.remove('scale-110');
+                }, 1000);
+            }
+        }
+    };
+
+    const acrossClassSearch = async (query: string) => {
+        if (!query) return;
+        
+        const searchText = query.toUpperCase().trim();
+        const nameMatch = searchText.match(/^([A-Z]+)/);
+        const idMatch = searchText.match(/^(\d+)/);
+        
+        for (const classroom of [...classes].sort()) {
+            if (classroom === selectedClass) continue;
+            
+            setSelectedClass(classroom);
+            
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            let elements = null;
+            if (nameMatch) {
+                const searchName = nameMatch[1];
+                elements = document.querySelectorAll(`[id^="student-${searchName}"]`);
+            } else if (idMatch) {
+                const searchId = idMatch[1];
+                elements = document.querySelectorAll(`[id$="-${searchId}"]`);
+            }
+            
+            if (elements && elements.length > 0) {
+                const element = elements[0];
+                const cell = element.closest('td');
+                if (cell) {
+                    setTimeout(() => {
                         cell.scrollIntoView({
                             behavior: 'smooth',
                             block: 'center',
                             inline: 'center'
                         });
-                    }
-                    
-                    element.classList.add('scale-110');
-                    setTimeout(() => {
-                        element.classList.remove('scale-110');
-                    }, 1000);
+                        
+                        element.classList.add('scale-110');
+                        setTimeout(() => {
+                            element.classList.remove('scale-110');
+                        }, 1000);
+                    }, 100);
+                    return; 
+                }
+            }
+        }
+    };
+
+    const handleSearch = (query: string) => {
+        setSearchQuery(query);
+        
+        if (query) {
+            setTimeout(async () => {
+                sameClassSearch(query);
+                
+                const searchText = query.toUpperCase().trim();
+                const currentElements = document.querySelectorAll(
+                    `[id^="student-${searchText}"], [id$="-${searchText}"]`
+                );
+                
+                if (!currentElements || currentElements.length === 0) {
+                    await acrossClassSearch(query);
                 }
             }, 100);
         }
