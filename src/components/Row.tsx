@@ -9,8 +9,7 @@ interface BuildRow {
 
 const Row: React.FC<BuildRow> = ({ rowNumber, seatingRow, searchQuery, columnName }) => {
     // let index: number = 0;
-    let classToggle = false;
-    console.log(rowNumber, seatingRow)
+    // console.log(rowNumber, seatingRow)
     return (
         // <tr>
         //     <td className="">
@@ -43,7 +42,7 @@ const Row: React.FC<BuildRow> = ({ rowNumber, seatingRow, searchQuery, columnNam
         //         );
         //     })} */}
         // </tr>
-        <div className="flex items-center gap-3 mb-3">
+        <div className="flex items-center gap-3 mb-3" data-row-number={rowNumber}>
             <p className="text-[var(--text-secondary)] text-xs font-medium text-right w-6">
                 {rowNumber}
             </p>
