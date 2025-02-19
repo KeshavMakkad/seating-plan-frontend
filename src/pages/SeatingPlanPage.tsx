@@ -138,7 +138,7 @@ const SeatingPlan = () => {
     };
 
     return (
-        <div className="flex flex-col h-screen">
+        <div className="h-screen">
             {seatingPlan && classes.length > 0 ? (
                 <>
                     <Header
@@ -148,7 +148,7 @@ const SeatingPlan = () => {
                         onSearch={handleSearch}
                     />
 
-                    <div className="flex-grow overflow-auto relative">
+                    <div className="flex-grow overflow-auto relative bg-[var(--background-color)]">
                         <OutlineTable
                             seatingPlan={seatingPlan.classrooms[selectedClass]}
                             searchQuery={searchQuery}
@@ -156,7 +156,7 @@ const SeatingPlan = () => {
                     </div>
                 </>
             ) : (
-                <div className="flex items-center justify-center h-full">
+                <div className="flex primary items-center justify-center h-full">
                     <p className="text-white text-lg">Loading...</p>
                 </div>
             )}
