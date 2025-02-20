@@ -6,8 +6,8 @@ interface ProfileCardProps {
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ email }) => {
     const split = email.split(".");
-    let name = split[0].trim(); // Ensure no leading/trailing spaces
-    name = name === "" ? "Blank" : name; // Set "Blank" if empty
+    let name = split[0].trim();
+    name = name === "" ? "Blank" : name;
 
     let rollNumber = "";
 

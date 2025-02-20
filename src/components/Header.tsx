@@ -1,5 +1,7 @@
 import type React from "react";
 import SearchBar from "./SearchBar";
+import { useTheme } from "./../styles/ThemesContext";
+import { MoonIcon, SunIcon } from "lucide-react"; // Install lucide-react if needed
 
 interface HeaderProps {
     classes: string[];
@@ -15,6 +17,8 @@ const Header: React.FC<HeaderProps> = ({
     onClassChange,
     onSearch,
 }) => {
+    const { theme, toggleTheme } = useTheme();
+
     return (
         <div className="bg-gray-800 p-4 flex items-center justify-evenly shadow-md w-full">
             {/* Logo Section */}
@@ -28,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({
             </div>
 
             {/* Classes Section */}
-            <div className="flex space-x-2">
+            <div className="flex space-x-2 items-center">
                 {classes.length > 0 ? (
                     classes.map((cls) => (
                         <button
@@ -46,6 +50,14 @@ const Header: React.FC<HeaderProps> = ({
                 ) : (
                     <span className="text-gray-400">No classes available</span>
                 )}
+
+                {/* Theme Toggle Button */}
+                <button
+                    onClick={toggleTheme}
+                    className="p-2 rounded-md transition-colors bg-gray-700 text-gray-300 hover:bg-gray-600"
+                >
+                    {theme === "light" ? <MoonIcon size={20} /> : <SunIcon size={20} />}
+                </button>
             </div>
         </div>
     );
