@@ -53,7 +53,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                         display: "flex",
                         alignItems: "center",
                         fontSize: "16px",
-                        color: "var(--text-secondary)"
+                        color: "var(--text)"
                     },
                 }}
                   

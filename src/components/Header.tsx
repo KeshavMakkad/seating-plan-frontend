@@ -43,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({
 
             <div className="bg-[var(--surface-color)] border-b border-[var(--border-color)] shadow-md w-full px-8 sm:px-3 py-3 flex items-center justify-between">
                 {/* Home Button */}
-                <button className="p-2 text-[var(--primary-color)]">
+                <button className="p-2 text-[var(--primary-color)] h-10 w-10">
                     <HomeIcon size={24} />
                 </button>
 
@@ -55,7 +55,7 @@ const Header: React.FC<HeaderProps> = ({
                 {/* Theme Toggle Button */}
                 <button
                     onClick={handleThemeChange}
-                    className="relative w-12 h-12 rounded-full border-4 border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-800 
+                    className="relative w-10 h-10 rounded-full border-4 border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-800 
                                shadow-lg flex items-center justify-center transition-all duration-300 ease-in-out"
                 >
                     {/* Moon Icon (Visible in Light Mode) */}
