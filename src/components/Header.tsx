@@ -8,6 +8,7 @@ interface HeaderProps {
     selectedClass: string;
     onClassChange: (cls: string) => void;
     onSearch: (query: string) => void;
+    isSearching: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
