@@ -45,7 +45,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                 }}
                 sx={{
                     "& .MuiOutlinedInput-root": {
-                        border: "1px solid var(--text-secondary)",
+                        border: "1px solid var(--border-color)",
                     },
                     "& .MuiOutlinedInput-input": {
                         padding: "10px 0px",
@@ -53,7 +53,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                         display: "flex",
                         alignItems: "center",
                         fontSize: "16px",
-                        color: "var(--text)"
+                        color: "var(--text-secondary)"
                     },
                 }}
                   

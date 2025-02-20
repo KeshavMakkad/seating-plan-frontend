@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import OutlineTable from "./../components/Outline";
 import Header from "./../components/Header";
 import fetchSeating from "./../context/fetchSeating";
+
 const SeatingPlan = () => {
     const { name } = useParams<{ name?: string }>();
     const [seatingPlan, setSeatingPlan] = useState<any>(null);
@@ -33,7 +34,6 @@ const SeatingPlan = () => {
         if (seatingPlan?.classrooms) {
             const classroomNames = Object.keys(seatingPlan.classrooms);
             if (classroomNames.length > 0) {
-                console.log("Setting classes:", classroomNames);
                 setClasses(classroomNames);
                 setSelectedClass((prev) => prev || classroomNames[0]);
             }
@@ -46,7 +46,7 @@ const SeatingPlan = () => {
 
     const handleSearch = async (query: string) => {
         setSearchQuery(query);
-        if(query === '') setIsSearching(false);
+        if (query === "") setIsSearching(false);
         if (query) {
             setIsSearching(true);
             const found = sameClassSearch(query);
@@ -146,7 +146,7 @@ const SeatingPlan = () => {
     };
 
     return (
-        <div className="h-screen">
+        <div className="h-screen relative">
             {seatingPlan && classes.length > 0 ? (
                 <>
                     <Header
@@ -159,17 +159,15 @@ const SeatingPlan = () => {
 
                     {searchResult && (
                         <div className="bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background-primary)] bg-opacity-90 backdrop-blur-lg py-3 px-10 shadow-md mx-2 mb-2 rounded-lg border border-[var(--border-color)] flex items-center justify-between text-sm sm:text-base">
-                        {/* Left Side - Name */}
-                        <span className="text-[var(--text-primary)] font-semibold truncate">
-                            {searchResult.name}
-                        </span>
-                    
-                        {/* Right Side - Seat Position */}
-                        <div className="bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm font-bold">
-                            {searchResult.class} - {searchResult.column.split(" ")[1]}{searchResult.row + 1}
+                            <span className="text-[var(--text-primary)] font-semibold truncate">
+                                {searchResult.name}
+                            </span>
+                            <div className="bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm font-bold">
+                                {searchResult.class} -{" "}
+                                {searchResult.column.split(" ")[1]}
+                                {searchResult.row + 1}
+                            </div>
                         </div>
-                    </div>
-                    
                     )}
 
                     <div className="flex-grow overflow-auto relative bg-[var(--background-color)]">
@@ -187,8 +185,9 @@ const SeatingPlan = () => {
                     </div>
                 </>
             ) : (
-                <div className="flex primary items-center justify-center h-full">
-                    <p className="text-white text-lg">Loading...</p>
+                // Blur screen with animated loading spinner
+                <div className="absolute inset-0 bg-[var(--background-color)] bg-opacity-50 backdrop-blur-lg flex items-center justify-center z-50 backdrop-blur-xl">
+                    <div className="w-16 h-16 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
                 </div>
             )}
         </div>

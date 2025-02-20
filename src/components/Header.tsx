@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SearchBar from "./SearchBar";
 import { useTheme } from "./../styles/ThemesContext";
+import { useNavigate } from "react-router-dom";
 import { MoonIcon, SunIcon, HomeIcon } from "lucide-react"; // Install lucide-react if needed
 
 interface HeaderProps {
@@ -19,15 +20,29 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
     const { theme, toggleTheme } = useTheme();
     const [showBlur, setShowBlur] = useState(false);
+    const navigate = useNavigate();
 
-    const handleThemeChange = () => {
-        setShowBlur(true); // Show blur effect
+    // Reusable blur effect function
+    const showBlurEffect = (callback: () => void) => {
+        setShowBlur(true);
         setTimeout(() => {
-            toggleTheme(); // Change theme after a short delay
+            callback();
         }, 150);
         setTimeout(() => {
-            setShowBlur(false); // Hide blur effect smoothly
+            setShowBlur(false);
         }, 500);
+    };
+
+    // Handle theme change with blur effect
+    const handleThemeChange = () => {
+        showBlurEffect(toggleTheme);
+    };
+
+    // Handle class change with blur effect
+    const handleClassChange = (cls: string) => {
+        if (cls !== selectedClass) {
+            showBlurEffect(() => onClassChange(cls));
+        }
     };
 
     return (
@@ -35,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({
             {/* Full-Screen Blur Effect */}
             {showBlur && (
                 <div
-                    className={`fixed inset-0 z-50 transition-opacity duration-500 ease-in-out
+                    className={`fixed inset-0 z-50 transition-opacity duration-500 ease-in-out 
                     ${theme === "light" ? "bg-white/30" : "bg-black/30"} 
                     backdrop-blur-xl`}
                 />
@@ -43,7 +58,10 @@ const Header: React.FC<HeaderProps> = ({
 
             <div className="bg-[var(--surface-color)] border-b border-[var(--border-color)] shadow-md w-full px-8 sm:px-3 py-3 flex items-center justify-between">
                 {/* Home Button */}
-                <button className="p-2 text-[var(--primary-color)] h-10 w-10">
+                <button
+                    className="p-2 text-[var(--primary-color)] h-10 w-10 hover:cursor-pointer"
+                    onClick={() => navigate("/")}
+                >
                     <HomeIcon size={24} />
                 </button>
 
@@ -58,22 +76,15 @@ const Header: React.FC<HeaderProps> = ({
                     className="relative w-10 h-10 rounded-full border-4 border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-800 
                                shadow-lg flex items-center justify-center transition-all duration-300 ease-in-out"
                 >
-                    {/* Moon Icon (Visible in Light Mode) */}
                     {theme === "light" ? (
-                        <MoonIcon
-                            className="text-gray-500 transition-transform duration-300 ease-in-out scale-100"
-                            size={24}
-                        />
+                        <MoonIcon className="text-gray-500 transition-transform duration-300 ease-in-out scale-100" size={24} />
                     ) : (
-                        <SunIcon
-                            className="text-yellow-300 transition-transform duration-300 ease-in-out scale-100"
-                            size={24}
-                        />
+                        <SunIcon className="text-yellow-300 transition-transform duration-300 ease-in-out scale-100" size={24} />
                     )}
                 </button>
             </div>
 
-            {/* Class Selection Section (Below Header in Mobile) */}
+            {/* Class Selection Section */}
             <div className="bg-[var(--background-color)] p-2 flex justify-center space-x-2 flex-wrap md:flex-nowrap">
                 {classes.length > 0 ? (
                     classes.map((cls) => (
@@ -84,7 +95,7 @@ const Header: React.FC<HeaderProps> = ({
                                     ? "bg-[var(--primary-light)] text-[var(--background-color)] font-semibold shadow-md"
                                     : "bg-[var(--surface-color)] text-[var(--primary-color)]"
                             }`}
-                            onClick={() => onClassChange(cls)}
+                            onClick={() => handleClassChange(cls)}
                         >
                             {cls}
                         </button>
