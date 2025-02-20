@@ -160,7 +160,8 @@ const SeatingPlan = () => {
                     {searchResult && (
                         <div className="bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background-primary)] bg-opacity-90 backdrop-blur-lg py-3 px-10 shadow-md mx-2 mb-2 rounded-lg border border-[var(--border-color)] flex items-center justify-between text-sm sm:text-base">
                             <span className="text-[var(--text-primary)] font-semibold truncate">
-                                {searchResult.name}
+                                {searchResult.name.charAt(0).toUpperCase() +
+                                    searchResult.name.slice(1)}
                             </span>
                             <div className="bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm font-bold">
                                 {searchResult.class} -{" "}
