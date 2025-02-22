@@ -58,21 +58,20 @@ const SeatingPlan = () => {
     };
 
     const sameClassSearch = (query: string) => {
+        // Clear all highlighted elements first
+        const allHighlightedElements = document.querySelectorAll('[style*="background-color"]');
+        allHighlightedElements.forEach(el => {
+            (el as HTMLElement).style.removeProperty('background-color');
+            (el as HTMLElement).style.removeProperty('color');
+            el.classList.remove('scale-110', 'transition-all', 'duration-300', 'ease-in-out');
+        });
+
         if (!query) {
             setSearchResult(null);
-            const highlightedElements =
-                document.querySelectorAll(".bg-yellow-300");
-            highlightedElements.forEach((el) => {
-                el.classList.remove("bg-yellow-300", "scale-110");
-            });
             return false;
         }
 
         const searchText = query.toLowerCase().trim();
-        const highlightedElements = document.querySelectorAll(".bg-yellow-300");
-        highlightedElements.forEach((el) => {
-            el.classList.remove("bg-yellow-300", "scale-110");
-        });
         const elements = document.querySelectorAll(`div[class*="text-center"]`);
         const matchingElements = Array.from(elements).filter((el) => {
             const content = el.textContent?.toLowerCase() || "";
@@ -113,13 +112,9 @@ const SeatingPlan = () => {
                 block: "end",
                 inline: "end",
             });
-            cell.classList.add(
-                "bg-yellow-300",
-                "scale-110",
-                "transition-all",
-                "duration-300",
-                "ease-in-out"
-            );
+            (cell as HTMLElement).style.backgroundColor = 'rgba(78, 88, 223, 0.575)';
+            cell.classList.add('scale-110', 'transition-all', 'duration-300', 'ease-in-out');
+            (cell as HTMLElement).style.color = 'rgb(255, 255, 255)';
             return true;
         }
         setSearchResult(null);
@@ -157,19 +152,22 @@ const SeatingPlan = () => {
                         isSearching={isSearching}
                     />
 
-                    {searchResult && (
-                        <div className="bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background-primary)] bg-opacity-90 backdrop-blur-lg py-3 px-10 shadow-md mx-2 mb-2 rounded-lg border border-[var(--border-color)] flex items-center justify-between text-sm sm:text-base">
-                            <span className="text-[var(--text-primary)] font-semibold truncate">
-                                {searchResult.name.charAt(0).toUpperCase() +
-                                    searchResult.name.slice(1)}
-                            </span>
-                            <div className="bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm font-bold">
-                                {searchResult.class} -{" "}
-                                {searchResult.column.split(" ")[1]}
-                                {searchResult.row + 1}
+                    {searchResult ? (
+                        <div className="bg-[var(--background-secondary)] p-4 shadow-md mx-4 rounded-md">
+                            <div className="text-[var(--text-primary)]">
+                                <span className="font-semibold">{searchResult.name}</span> is seated in:
+                                <span className="ml-2 text-[var(--primary-color)]">
+                                    {searchResult.class}, Row {searchResult.row + 1}, {searchResult.column}
+                                </span>
                             </div>
                         </div>
-                    )}
+                    ) : searchQuery && !isSearching ? (
+                        <div className="bg-[var(--background-secondary)] p-4 shadow-md mx-4 rounded-md">
+                            <div className="text-[var(--text-primary)]">
+                                No student found matching "{searchQuery}"
+                            </div>
+                        </div>
+                    ) : null}
 
                     <div className="flex-grow overflow-auto relative bg-[var(--background-color)]">
                         {isSearching && (
