@@ -1,49 +1,34 @@
 import ProfileCard from "./Profile";
 
 interface BuildRow {
+    columnName: string;
     rowNumber: number;
-    seating_plan: { [key: string]: any[] };
+    seatingRow: string[];
     searchQuery: string;
 }
 
-const Row: React.FC<BuildRow> = ({ rowNumber, seating_plan, searchQuery }) => {
-    // let index: number = 0;
-    let classToggle = false;
+const Row: React.FC<BuildRow> = ({ rowNumber, seatingRow, searchQuery, columnName }) => {
     return (
-        <tr>
-            <td className="sticky left-0 text-center bg-gray-500 opacity-100">
-                {rowNumber}
-            </td>
-            {Object.keys(seating_plan).map((key) => {
-                classToggle = !classToggle;
-                let firstColumn = key;
-                // let numberOfDesks = seating_plan[firstColumn][0];
-                let deskSeating = seating_plan[firstColumn][1][rowNumber];
-                return (
-                    <td
-                        className={`p-8 ${
-                            classToggle ? "bg-gray-800" : "bg-gray-900"
-                        }`}
-                    >
-                        <div className="flex justify-evenly">
-                            {deskSeating.map((email: string) => {
-                                return (
-                                    <ProfileCard
-                                        email={email}
-                                        column={key}
-                                        searchQuery={searchQuery}
-                                    />
-                                );
-                                // return email + " ";
-                            })}
-                            {/* {deskSeating.length} */}
-                        </div>
-                    </td>
-                );
-            })}
-        </tr>
+        <div className="flex items-center gap-3 mb-3" data-row-number={rowNumber}>
+            {/* Sticky Row Number with Animation */}
+            <div className="sticky left-0 px-2 py-1 z-10 min-h-[2rem] min-w-[1.8rem] rounded 
+                            flex items-center justify-center bg-[var(--background-color)] 
+                            text-[var(--text-secondary)] text-[15px] font-medium text-center
+                            transition-all duration-300 ease-in-out shadow-md 
+                            hover:scale-110 hover:bg-[var(--primary-color)] hover:text-white">
+                {rowNumber + 1}
+            </div>
 
-        // <div>Hello</div>
+            {/* Seating Profiles */}
+            {seatingRow.map((email, index) => (
+                <ProfileCard 
+                    key={index} 
+                    email={email} 
+                    column={columnName} 
+                    searchQuery={searchQuery} 
+                />
+            ))}
+        </div>
     );
 };
 

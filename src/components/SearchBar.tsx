@@ -22,13 +22,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     };
 
     return (
-        <div className="w-full max-w-xs">
+        <div className="w-full max-w-[250px] sm:max-w-[350px] md:max-w-[450px] lg:max-w-[600px] xl:max-w-[700px] flex justify-center transition-all duration-300 px-5">
             <TextField
                 variant="outlined"
-                placeholder="Search by name or roll number..."
+                placeholder="Search..."
                 value={searchQuery}
                 onChange={handleSearch}
-                className="w-full bg-white rounded-md shadow-sm border border-gray-300 focus:ring-2 focus:ring-blue-400"
+                fullWidth
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
@@ -43,6 +43,20 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                         </InputAdornment>
                     ),
                 }}
+                sx={{
+                    "& .MuiOutlinedInput-root": {
+                        border: "1px solid var(--border-color)",
+                    },
+                    "& .MuiOutlinedInput-input": {
+                        padding: "10px 0px",
+                        height: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        fontSize: "16px",
+                        color: "var(--text-secondary)"
+                    },
+                }}
+                  
             />
         </div>
     );
