@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import SeatingPlanPage from "./pages/SeatingPlanPage";
-import { ThemeProvider } from "./styles/ThemesContext";
+import { ThemeProvider } from "./utils/ThemesContext";
 
 function App() {
     return (
