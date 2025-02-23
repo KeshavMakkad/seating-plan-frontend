@@ -7,8 +7,8 @@ function Home() {
     const [allNamesList, setAllNamesList] = useState<any[]>([]); // Store full data
     const [namesList, setNamesList] = useState<any[]>([]); // Store filtered data
     const [isLoading, setIsLoading] = useState(true);
-    const [selectedSort, setSelectedSort] = useState("Date");
-    const [sortOrder, setSortOrder] = useState("asc");
+    // const [selectedSort, setSelectedSort] = useState("Date");
+    // const [sortOrder, setSortOrder] = useState("asc");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,8 +22,6 @@ function Home() {
     }, []);
 
     const sortSeatingPlans = (sortBy: string, order: string) => {
-        setSelectedSort(sortBy);
-        setSortOrder(order);
         let sortedList = [...allNamesList]; // Always sort from original dataset
 
         if (sortBy === "Name") {
