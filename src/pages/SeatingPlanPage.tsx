@@ -149,7 +149,7 @@ const SeatingPlan = () => {
                         selectedClass={selectedClass}
                         onClassChange={handleClassChange}
                         onSearch={handleSearch}
-                        isSearching={isSearching}
+                        // isSearching={isSearching}
                     />
 
                     {searchResult && (
