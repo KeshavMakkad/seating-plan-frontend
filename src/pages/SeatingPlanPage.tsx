@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import OutlineTable from "./../components/Outline";
-import Header from "./../components/Header";
+import Header from "../components/ClassHeader";
 import fetchSeating from "./../context/fetchSeating";
 
 const SeatingPlan = () => {
@@ -149,25 +149,22 @@ const SeatingPlan = () => {
                         selectedClass={selectedClass}
                         onClassChange={handleClassChange}
                         onSearch={handleSearch}
-                        isSearching={isSearching}
+                        // isSearching={isSearching}
                     />
 
-                    {searchResult ? (
-                        <div className="bg-[var(--background-secondary)] p-4 shadow-md mx-4 rounded-md">
-                            <div className="text-[var(--text-primary)]">
-                                <span className="font-semibold">{searchResult.name}</span> is seated in:
-                                <span className="ml-2 text-[var(--primary-color)]">
-                                    {searchResult.class}, Row {searchResult.row + 1}, {searchResult.column}
-                                </span>
+                    {searchResult && (
+                        <div className="bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background-secondary)] bg-opacity-90 backdrop-blur-lg py-3 px-10 shadow-md mx-2 mb-2 rounded-lg border border-[var(--border-color)] flex items-center justify-between text-sm sm:text-base">
+                            <span className="text-[var(--text-primary)] font-semibold truncate">
+                                {searchResult.name.charAt(0).toUpperCase() +
+                                    searchResult.name.slice(1)}
+                            </span>
+                            <div className="bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm font-bold">
+                                {searchResult.class} -{" "}
+                                {searchResult.column.split(" ")[1]}
+                                {searchResult.row + 1}
                             </div>
                         </div>
-                    ) : searchQuery && !isSearching ? (
-                        <div className="bg-[var(--background-secondary)] p-4 shadow-md mx-4 rounded-md">
-                            <div className="text-[var(--text-primary)]">
-                                No student found matching "{searchQuery}"
-                            </div>
-                        </div>
-                    ) : null}
+                    )}
 
                     <div className="flex-grow overflow-auto relative bg-[var(--background-color)]">
                         {isSearching && (

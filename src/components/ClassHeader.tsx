@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import SearchBar from "./SearchBar";
-import { useTheme } from "./../styles/ThemesContext";
+import { useTheme } from "../utils/ThemesContext";
 import { useNavigate } from "react-router-dom";
-import { MoonIcon, SunIcon, HomeIcon } from "lucide-react"; // Install lucide-react if needed
+import { MoonIcon, SunIcon, HomeIcon } from "lucide-react";
+import { useBlurEffect } from "./../utils/useBlurEffect"; // Import the custom hook
 
 interface HeaderProps {
     classes: string[];
     selectedClass: string;
     onClassChange: (cls: string) => void;
     onSearch: (query: string) => void;
-    isSearching: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -19,29 +19,16 @@ const Header: React.FC<HeaderProps> = ({
     onSearch,
 }) => {
     const { theme, toggleTheme } = useTheme();
-    const [showBlur, setShowBlur] = useState(false);
+    const { showBlur, triggerBlurEffect } = useBlurEffect();
     const navigate = useNavigate();
 
-    // Reusable blur effect function
-    const showBlurEffect = (callback: () => void) => {
-        setShowBlur(true);
-        setTimeout(() => {
-            callback();
-        }, 150);
-        setTimeout(() => {
-            setShowBlur(false);
-        }, 500);
-    };
-
-    // Handle theme change with blur effect
     const handleThemeChange = () => {
-        showBlurEffect(toggleTheme);
+        triggerBlurEffect(toggleTheme);
     };
 
-    // Handle class change with blur effect
     const handleClassChange = (cls: string) => {
         if (cls !== selectedClass) {
-            showBlurEffect(() => onClassChange(cls));
+            triggerBlurEffect(() => onClassChange(cls));
         }
     };
 
@@ -57,20 +44,14 @@ const Header: React.FC<HeaderProps> = ({
             )}
 
             <div className="bg-[var(--surface-color)] border-b border-[var(--border-color)] shadow-md w-full px-8 sm:px-3 py-3 flex items-center justify-between">
-                {/* Home Button */}
-                <button
-                    className="p-2 text-[var(--primary-color)] h-10 w-10 hover:cursor-pointer"
-                    onClick={() => navigate("/")}
-                >
+                <button className="p-2 text-[var(--primary-color)] h-10 w-10 hover:cursor-pointer" onClick={() => navigate("/")}>
                     <HomeIcon size={24} />
                 </button>
 
-                {/* Search Bar */}
                 <div className="flex-1 mx-4 max-w-lg flex justify-center">
                     <SearchBar onSearch={onSearch} />
                 </div>
 
-                {/* Theme Toggle Button */}
                 <button
                     onClick={handleThemeChange}
                     className="relative w-10 h-10 rounded-full border-4 border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-800 
@@ -84,7 +65,6 @@ const Header: React.FC<HeaderProps> = ({
                 </button>
             </div>
 
-            {/* Class Selection Section */}
             <div className="bg-[var(--background-color)] p-2 flex justify-center space-x-2 flex-wrap md:flex-nowrap">
                 {classes.length > 0 ? (
                     classes.map((cls) => (
