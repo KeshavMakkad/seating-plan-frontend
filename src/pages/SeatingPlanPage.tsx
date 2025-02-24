@@ -20,15 +20,28 @@ const SeatingPlan = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (name) {
-                const data = await fetchSeating(name);
-                setSeatingPlan(data.data);
-            } else {
+            if (!name) {
                 console.error("Name is undefined, cannot fetch seating data.");
+                return;
+            }
+            
+            const data = await fetchSeating(name);
+            
+            if (data.errorCode) {
+                console.error(
+                    `Failed to fetch seating data. Error code: ${data.errorCode}`
+                );
+                setSeatingPlan({ error: data.errorCode });
+                return;
+            } else {
+                setSeatingPlan(data.data);
             }
         };
+
         fetchData();
-    }, []);
+    }, [name]); // Added `name` as a dependency
+
+    console.log(seatingPlan);
 
     useEffect(() => {
         if (seatingPlan?.classrooms) {
@@ -59,11 +72,18 @@ const SeatingPlan = () => {
 
     const sameClassSearch = (query: string) => {
         // Clear all highlighted elements first
-        const allHighlightedElements = document.querySelectorAll('[style*="background-color"]');
-        allHighlightedElements.forEach(el => {
-            (el as HTMLElement).style.removeProperty('background-color');
-            (el as HTMLElement).style.removeProperty('color');
-            el.classList.remove('scale-110', 'transition-all', 'duration-300', 'ease-in-out');
+        const allHighlightedElements = document.querySelectorAll(
+            '[style*="background-color"]'
+        );
+        allHighlightedElements.forEach((el) => {
+            (el as HTMLElement).style.removeProperty("background-color");
+            (el as HTMLElement).style.removeProperty("color");
+            el.classList.remove(
+                "scale-110",
+                "transition-all",
+                "duration-300",
+                "ease-in-out"
+            );
         });
 
         if (!query) {
@@ -112,9 +132,15 @@ const SeatingPlan = () => {
                 block: "end",
                 inline: "end",
             });
-            (cell as HTMLElement).style.backgroundColor = 'rgba(78, 88, 223, 0.575)';
-            cell.classList.add('scale-110', 'transition-all', 'duration-300', 'ease-in-out');
-            (cell as HTMLElement).style.color = 'rgb(255, 255, 255)';
+            (cell as HTMLElement).style.backgroundColor =
+                "rgba(78, 88, 223, 0.575)";
+            cell.classList.add(
+                "scale-110",
+                "transition-all",
+                "duration-300",
+                "ease-in-out"
+            );
+            (cell as HTMLElement).style.color = "rgb(255, 255, 255)";
             return true;
         }
         setSearchResult(null);
@@ -142,7 +168,11 @@ const SeatingPlan = () => {
 
     return (
         <div className="h-screen relative">
-            {seatingPlan && classes.length > 0 ? (
+            {seatingPlan?.error ? (
+                <div className="absolute inset-0 flex items-center justify-center text-red-500 text-lg font-bold">
+                    Error {seatingPlan.error}: Unable to load seating data.
+                </div>
+            ) : seatingPlan && classes.length > 0 ? (
                 <>
                     <Header
                         classes={classes}
@@ -174,10 +204,14 @@ const SeatingPlan = () => {
                                 </div>
                             </div>
                         )}
-                        <OutlineTable
-                            seatingPlan={seatingPlan.classrooms[selectedClass]}
-                            searchQuery={searchQuery}
-                        />
+                        {seatingPlan.classrooms[selectedClass] && (
+                            <OutlineTable
+                                seatingPlan={
+                                    seatingPlan.classrooms[selectedClass]
+                                }
+                                searchQuery={searchQuery}
+                            />
+                        )}
                     </div>
                 </>
             ) : (
