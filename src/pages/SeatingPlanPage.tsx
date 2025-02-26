@@ -11,12 +11,14 @@ const SeatingPlan = () => {
     const [selectedClass, setSelectedClass] = useState<string>("");
     const [searchQuery, setSearchQuery] = useState("");
     const [isSearching, setIsSearching] = useState(false);
-    const [searchResult, setSearchResult] = useState<{
+    const [searchResult, setSearchResult] = useState<Array<{
         name: string;
-        row: number;
-        column: string;
-        class: string;
-    } | null>(null);
+        positions: Array<{
+            row: number;
+            column: string;
+            class: string;
+        }>;
+    }> | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -95,10 +97,17 @@ const SeatingPlan = () => {
         const elements = document.querySelectorAll(`div[class*="text-center"]`);
         const matchingElements = Array.from(elements).filter((el) => {
             const content = el.textContent?.toLowerCase() || "";
+            
             if (content === searchText) return true;
+            
             const words = content.split(/[\s-]+/);
+            
             if (words.some((word) => word === searchText)) return true;
+            
             if (words.some((word) => word.startsWith(searchText))) return true;
+            
+            if (words.some((word) => word.match(/\d+/) && word.endsWith(searchText))) return true;
+            
             const searchParts = searchText.split(/[\s-]+/);
             if (searchParts.length > 1) {
                 return searchParts.every((part) =>
@@ -110,37 +119,55 @@ const SeatingPlan = () => {
         });
 
         if (matchingElements.length > 0) {
-            const element = matchingElements[0];
-            const cell = element.closest('div[class*="bg-["]') || element;
-            const name = element.textContent || "";
-            const rowElement = cell.closest("[data-row-number]");
-            const columnElement = cell.closest("[data-column-name]");
+            const matchesByName = new Map<string, Array<{
+                row: number;
+                column: string;
+                class: string;
+            }>>();
+            
+            matchingElements.forEach(element => {
+                const name = element.textContent || "";
+                const cell = element.closest('div[class*="bg-["]') || element;
+                const rowElement = cell.closest("[data-row-number]");
+                const columnElement = cell.closest("[data-column-name]");
 
-            if (rowElement && columnElement) {
-                setSearchResult({
-                    name,
-                    row: parseInt(
-                        rowElement.getAttribute("data-row-number") || "0"
-                    ),
-                    column:
-                        columnElement.getAttribute("data-column-name") || "",
-                    class: selectedClass,
-                });
-            }
-            cell.scrollIntoView({
+                if (rowElement && columnElement) {
+                    const position = {
+                        row: parseInt(rowElement.getAttribute("data-row-number") || "0"),
+                        column: columnElement.getAttribute("data-column-name") || "",
+                        class: selectedClass
+                    };
+
+                    if (!matchesByName.has(name)) {
+                        matchesByName.set(name, []);
+                    }
+                    matchesByName.get(name)?.push(position);
+                }
+
+                (cell as HTMLElement).style.backgroundColor = "rgba(78, 88, 223, 0.575)";
+                cell.classList.add(
+                    "scale-110",
+                    "transition-all",
+                    "duration-300",
+                    "ease-in-out"
+                );
+                (cell as HTMLElement).style.color = "rgb(255, 255, 255)";
+            });
+
+            const results = Array.from(matchesByName.entries()).map(([name, positions]) => ({
+                name,
+                positions
+            }));
+
+            setSearchResult(results);
+
+            const firstCell = matchingElements[0].closest('div[class*="bg-["]') || matchingElements[0];
+            firstCell.scrollIntoView({
                 behavior: "smooth",
                 block: "end",
                 inline: "end",
             });
-            (cell as HTMLElement).style.backgroundColor =
-                "rgba(78, 88, 223, 0.575)";
-            cell.classList.add(
-                "scale-110",
-                "transition-all",
-                "duration-300",
-                "ease-in-out"
-            );
-            (cell as HTMLElement).style.color = "rgb(255, 255, 255)";
+            
             return true;
         }
         setSearchResult(null);
@@ -183,16 +210,21 @@ const SeatingPlan = () => {
                     />
 
                     {searchResult && (
-                        <div className="bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background-secondary)] bg-opacity-90 backdrop-blur-lg py-3 px-10 shadow-md mx-2 mb-2 rounded-lg border border-[var(--border-color)] flex items-center justify-between text-sm sm:text-base">
-                            <span className="text-[var(--text-primary)] font-semibold truncate">
-                                {searchResult.name.charAt(0).toUpperCase() +
-                                    searchResult.name.slice(1)}
-                            </span>
-                            <div className="bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm font-bold">
-                                {searchResult.class} -{" "}
-                                {searchResult.column.split(" ")[1]}
-                                {searchResult.row + 1}
-                            </div>
+                        <div className="bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background-secondary)] bg-opacity-90 backdrop-blur-lg py-3 px-10 shadow-md mx-2 mb-2 rounded-lg border border-[var(--border-color)] flex flex-col gap-4">
+                            {searchResult.map((result, resultIndex) => (
+                                <div key={resultIndex} className="flex flex-col gap-2">
+                                    <div className="text-[var(--text-primary)] font-semibold truncate">
+                                        {result.name.charAt(0).toUpperCase() + result.name.slice(1)}
+                                    </div>
+                                    <div className="flex flex-wrap gap-2">
+                                        {result.positions.map((pos, index) => (
+                                            <div key={index} className="bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm font-bold">
+                                                {pos.class} - {pos.column.split(" ")[1]}{pos.row + 1}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     )}
 
