@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import OutlineTable from "./../components/Outline";
 import Header from "../components/ClassHeader";
 import fetchSeating from "./../context/fetchSeating";
+import CountdownPage from "./CountdownPage";
 
 const SeatingPlan = () => {
     const { name } = useParams<{ name?: string }>();
@@ -33,7 +34,7 @@ const SeatingPlan = () => {
                 console.error(
                     `Failed to fetch seating data. Error code: ${data.errorCode}`
                 );
-                setSeatingPlan({ error: data.errorCode });
+                setSeatingPlan({ error: data.errorCode, message: data.message });
                 return;
             } else {
                 setSeatingPlan(data.data);
@@ -195,10 +196,8 @@ const SeatingPlan = () => {
 
     return (
         <div className="h-screen relative">
-            {seatingPlan?.error ? (
-                <div className="absolute inset-0 flex items-center justify-center text-red-500 text-lg font-bold">
-                    Error {seatingPlan.error}: Unable to load seating data.
-                </div>
+            {seatingPlan?.error == 418 ? (
+                <CountdownPage initialDate={seatingPlan.message} />
             ) : seatingPlan && classes.length > 0 ? (
                 <>
                     <Header

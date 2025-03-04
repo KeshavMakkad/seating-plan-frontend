@@ -5,6 +5,7 @@ interface FetchSeating {
     data: {
         classrooms: Record<string, any>;
     };
+    message?: string;
     errorCode?: number; // Store HTTP error code
 }
 
@@ -19,12 +20,13 @@ const fetchSeating = async (name: string): Promise<FetchSeating> => {
         const { data } = await axios.get<FetchSeating>(`${BACKEND_URI}/data/${name}`);
         return data;
     } catch (error: any) {
-        console.error("Error fetching seating data");
+        console.error("ERROR while fetching data");
 
         return {
             name,
             data: { classrooms: {} },
-            errorCode: error.response?.status || 500, // Return actual status code or default to 500
+            errorCode: error.response?.status || 500,
+            message: error.response?.data.message
         };
     }
 };
