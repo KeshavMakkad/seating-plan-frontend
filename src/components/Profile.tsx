@@ -12,14 +12,15 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ email }) => {
     let rollNumber = "";
 
     if (split[1] !== undefined) {
-        rollNumber = split[1].split("@")[0].toUpperCase()
+        rollNumber = split[1].split("@")[0].toUpperCase();
     }
 
     const elementId = `student-${name}-${rollNumber}`.replace(/\s+/g, '-');
 
     return (
-        <div 
-            className={`p-[0.625rem] rounded-md text-center text-sm min-h-[2.5rem] min-w-[250px] 
+        <div
+            className={`p-[0.450rem] md:p-[0.625rem] rounded-sm md:rounded-md text-center text-xs md:text-sm 
+                        min-h-[2rem] md:min-h-[2.5rem] min-w-[150px] md:min-w-[250px] 
                         flex items-center justify-center transition-all duration-200 ease-in-out 
                         break-words flex-1 ${
                             name !== "Blank" && name !== "N/A" 

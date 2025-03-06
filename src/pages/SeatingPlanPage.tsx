@@ -4,6 +4,7 @@ import OutlineTable from "./../components/Outline";
 import Header from "../components/ClassHeader";
 import fetchSeating from "./../context/fetchSeating";
 import CountdownPage from "./CountdownPage";
+import SearchResult from "../components/SearchResult";
 
 const SeatingPlan = () => {
     const { name } = useParams<{ name?: string }>();
@@ -20,6 +21,8 @@ const SeatingPlan = () => {
             class: string;
         }>;
     }> | null>(null);
+
+    // if(searchQuery == "") setSearchResult([])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -43,8 +46,6 @@ const SeatingPlan = () => {
 
         fetchData();
     }, [name]); // Added `name` as a dependency
-
-    console.log(seatingPlan);
 
     useEffect(() => {
         if (seatingPlan?.classrooms) {
@@ -208,24 +209,7 @@ const SeatingPlan = () => {
                         // isSearching={isSearching}
                     />
 
-                    {searchResult && (
-                        <div className="bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background-secondary)] bg-opacity-90 backdrop-blur-lg py-3 px-10 shadow-md mx-2 mb-2 rounded-lg border border-[var(--border-color)] flex flex-col gap-4">
-                            {searchResult.map((result, resultIndex) => (
-                                <div key={resultIndex} className="flex flex-col gap-2">
-                                    <div className="text-[var(--text-primary)] font-semibold truncate">
-                                        {result.name.charAt(0).toUpperCase() + result.name.slice(1)}
-                                    </div>
-                                    <div className="flex flex-wrap gap-2">
-                                        {result.positions.map((pos, index) => (
-                                            <div key={index} className="bg-blue-600 text-white px-3 py-1 rounded-md text-xs sm:text-sm font-bold">
-                                                {pos.class} - {pos.column.split(" ")[1]}{pos.row + 1}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
+                    {searchResult && <SearchResult searchResult={searchResult} />}
 
                     <div className="flex-grow overflow-auto relative bg-[var(--background-color)]">
                         {isSearching && (
