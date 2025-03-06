@@ -199,10 +199,7 @@ const SeatingPlan = () => {
             {seatingPlan?.error == 418 ? (
                 <CountdownPage initialDate={seatingPlan.message} />
 
-            {seatingPlan?.error ? (
-                <div className="absolute inset-0 flex items-center justify-center text-red-500 text-lg font-bold">
-                    <CountdownPage initialDate={seatingPlan.message} />
-                </div>
+            
 
             ) : seatingPlan && classes.length > 0 ? (
                 <>
