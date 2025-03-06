@@ -7,6 +7,7 @@ interface FetchSeating {
     };
     message?: string;
     errorCode?: number; // Store HTTP error code
+    message?: string; // Store error message
 }
 
 const fetchSeating = async (name: string): Promise<FetchSeating> => {
@@ -25,8 +26,9 @@ const fetchSeating = async (name: string): Promise<FetchSeating> => {
         return {
             name,
             data: { classrooms: {} },
-            errorCode: error.response?.status || 500,
-            message: error.response?.data.message
+
+            errorCode: error.response?.status || 500, // Return actual status code or default to 500
+            message: error.response?.data.message,
         };
     }
 };

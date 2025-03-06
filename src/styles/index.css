@@ -16,8 +16,10 @@
     --border-color: #e2e8f0;
     --hover-color: #f8fafc;
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+        0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+        0 4px 6px -4px rgb(0 0 0 / 0.1);
     --seat-occupied-bg: rgb(37 99 235 / 0.1);
 }
 
@@ -29,14 +31,16 @@
     --border-color: #334155;
     --hover-color: #1e293b;
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3),
+        0 2px 4px -2px rgb(0 0 0 / 0.3);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3),
+        0 4px 6px -4px rgb(0 0 0 / 0.3);
     --seat-occupied-bg: rgb(37 99 235 / 0.2);
 }
 
 * {
     box-sizing: border-box;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -46,4 +50,99 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
     transition: background-color 0.3s, color 0.3s;
+}
+
+:root {
+    --color-grayish-blue: hsl(237, 18%, 59%);
+    --color-soft-red: hsl(345, 95%, 68%);
+    --color-white: hsl(0, 0%, 100%);
+    --color-dark-desaturated-blue: hsl(236, 21%, 26%);
+    --color-very-dark-blue: hsl(235, 16%, 14%);
+    --color-very-dark-mostly-black-blue: hsl(234, 17%, 12%);
+}
+
+body {
+    font-family: "Red Hat Text", sans-serif;
+}
+
+.text-xxs {
+    font-size: 0.5rem;
+}
+
+.tracking-widest {
+    letter-spacing: 0.4em;
+}
+
+.bg-stars {
+    background-image: url("./../assets/bg-stars.svg");
+}
+
+.bg-hills {
+    background-image: url("./../assets/pattern-hills.svg");
+}
+
+.text-theme_grayishBlue {
+    color: var(--color-grayish-blue);
+}
+.text-theme_softRed {
+    color: var(--color-soft-red);
+}
+.text-theme_white {
+    color: var(--color-white);
+}
+.bg-theme_darkDesaturatedBlue {
+    background-color: var(--color-dark-desaturated-blue);
+}
+.bg-theme_veryDarkBlue {
+    background-color: var(--color-very-dark-blue);
+}
+.bg-theme_veryDarkMostlyBlackBlue {
+    background-color: var(--color-very-dark-mostly-black-blue);
+}
+
+@keyframes flipTop {
+    0% {
+        transform: rotateX(0deg);
+    }
+    100% {
+        transform: rotateX(-180deg);
+    }
+}
+
+@keyframes flipBottom {
+    0% {
+        transform: rotateX(180deg);
+    }
+    100% {
+        transform: rotateX(0deg);
+    }
+}
+
+.animate-flipTop {
+    animation: flipTop 1s ease-in;
+}
+
+.animate-flipBottom {
+    animation: flipBottom 1s ease-in;
+}
+
+.brightness-80 {
+    filter: brightness(80%);
+}
+
+.backface-hidden {
+    backface-visibility: hidden;
+}
+
+.preserve-3d {
+    transform-style: preserve-3d;
+}
+
+.perspective {
+    perspective-origin: 50% 50%;
+    perspective: 450px;
+}
+
+.bg-x-82 {
+    background-position-x: 82%;
 }
