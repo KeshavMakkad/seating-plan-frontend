@@ -5,6 +5,7 @@ import Header from "../components/ClassHeader";
 import fetchSeating from "./../context/fetchSeating";
 import CountdownPage from "./CountdownPage";
 import SearchResult from "../components/SearchResult";
+import Loading from "../components/Loading";
 
 const SeatingPlan = () => {
     const { name } = useParams<{ name?: string }>();
@@ -232,9 +233,7 @@ const SeatingPlan = () => {
                 </>
             ) : (
                 // Blur screen with animated loading spinner
-                <div className="absolute inset-0 bg-[var(--background-color)] bg-opacity-50 backdrop-blur-lg flex items-center justify-center z-50 backdrop-blur-xl">
-                    <div className="w-16 h-16 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
-                </div>
+                <Loading />
             )}
         </div>
     );
