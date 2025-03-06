@@ -4,7 +4,6 @@ import OutlineTable from "./../components/Outline";
 import Header from "../components/ClassHeader";
 import fetchSeating from "./../context/fetchSeating";
 import CountdownPage from "./CountdownPage";
-
 import SearchResult from "../components/SearchResult";
 
 const SeatingPlan = () => {
@@ -197,9 +196,6 @@ const SeatingPlan = () => {
         <div className="h-screen relative">
 
             {seatingPlan?.error == 418 ? (
-                <CountdownPage initialDate={seatingPlan.message} />
-
-            {seatingPlan?.error ? (
                 <div className="absolute inset-0 flex items-center justify-center text-red-500 text-lg font-bold">
                     <CountdownPage initialDate={seatingPlan.message} />
                 </div>
