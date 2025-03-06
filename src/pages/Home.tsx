@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import get_seating from "../context/fetchNames";
 import HomeHeader from "./../components/HomeHeader";
 import { useBlurEffect } from "../utils/useBlurEffect";
+import Loading from "../components/Loading";
 
 function Home() {
     const [allNamesList, setAllNamesList] = useState<any[]>([]); // Store full data
@@ -64,10 +65,7 @@ function Home() {
             <HomeHeader sortSeating={sortSeatingPlans} onSearch={handleSearch} />
 
             {isLoading ? (
-                <div className="flex flex-col items-start ml-10 mt-6">
-                    <div className="w-8 h-8 border-4 border-[var(--border-color)] border-t-transparent rounded-full animate-spin"></div>
-                    <p className="mt-3 text-gray-400">Fetching seating data...</p>
-                </div>
+                <Loading />
             ) : (
                 <div className={`transition-opacity duration-500 ${showBlur ? "opacity-50" : "opacity-100"}`}>
                     <ul className="w-full mt-6 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-lg shadow-lg p-4 space-y-2">
