@@ -1,3 +1,4 @@
+import React from "react";
 const padStart = (number: number): string => {
     return number.toString().padStart(2, "0");
 };
@@ -23,6 +24,7 @@ const CountdownCard: React.FC<Props> = ({ id, label, current, previous }) => {
                         <circle r="8" fill="#000" cx="100%" cy="100%" />
                     </mask>
                     <use
+
                         href={`#${id}-r`} fill="hsl(236, 21%, 26%)" mask={`url(#${id}-m)`}
                     />
                 </svg>
