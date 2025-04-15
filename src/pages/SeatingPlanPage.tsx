@@ -43,7 +43,7 @@ const SeatingPlan = () => {
                 setSeatingPlan({ error: 418, message: data.message });
                 return;
             } else {
-                setSeatingPlan(data.data);
+                setSeatingPlan(data.data.data);
             }
         };
 
