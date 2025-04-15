@@ -18,7 +18,7 @@ interface CurrentPrevious {
 
 const getTimeLeft = (endDate: Date): Countdown => {
    const now = new Date();
-   const diff = endDate.getTime() - now.getTime();
+   const diff = endDate.getTime() - now.getTime() - 1000*60*30;
    const days = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
    const hours = Math.max(
        0,
