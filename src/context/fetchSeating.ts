@@ -2,9 +2,7 @@ import axios from 'axios';
 
 interface FetchSeating {
     name: string;
-    data: {
-        classrooms: Record<string, any>;
-    };
+    data: any;
     message?: string;
     errorCode?: number; // Store HTTP error code
 }
