@@ -38,8 +38,12 @@ const SeatingPlan = () => {
                 );
                 setSeatingPlan({ error: data.errorCode, message: data.message });
                 return;
+            } else if (data.message && !data.data) {
+                // Handle the case where the response contains a message (timestamp)
+                setSeatingPlan({ error: 418, message: data.message });
+                return;
             } else {
-                setSeatingPlan(data.data);
+                setSeatingPlan(data.data.data);
             }
         };
 
@@ -195,12 +199,10 @@ const SeatingPlan = () => {
     };
     return (
         <div className="h-screen relative">
-
-            {seatingPlan?.error == 418 ? (
+            {seatingPlan?.error === 418 ? (
                 <div className="absolute inset-0 flex items-center justify-center text-red-500 text-lg font-bold">
                     <CountdownPage initialDate={seatingPlan.message} />
                 </div>
-
             ) : seatingPlan && classes.length > 0 ? (
                 <>
                     <Header
@@ -210,9 +212,7 @@ const SeatingPlan = () => {
                         onSearch={handleSearch}
                         // isSearching={isSearching}
                     />
-
                     {searchResult && <SearchResult searchResult={searchResult} />}
-
                     <div className="flex-grow overflow-auto relative bg-[var(--background-color)]">
                         {isSearching && (
                             <div className="absolute inset-0 bg-black/20 flex items-center justify-center z-50">
@@ -223,16 +223,13 @@ const SeatingPlan = () => {
                         )}
                         {seatingPlan.classrooms[selectedClass] && (
                             <OutlineTable
-                                seatingPlan={
-                                    seatingPlan.classrooms[selectedClass]
-                                }
+                                seatingPlan={seatingPlan.classrooms[selectedClass]}
                                 searchQuery={searchQuery}
                             />
                         )}
                     </div>
                 </>
             ) : (
-                // Blur screen with animated loading spinner
                 <Loading />
             )}
         </div>
