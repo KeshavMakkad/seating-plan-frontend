@@ -1,10 +1,15 @@
 {
-    "rewrites": [{ "source": "/(.*)", "destination": "/" }],
-    "redirects": [
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
         {
-            "source": "/(.*)",
-            "destination": "https://sst-dashboard.netlify.app/seating",
-            "permanent": true
+          "type": "host",
+          "value": "!seating-sst-dev.vercel.app"
         }
-    ]
+      ],
+      "destination": "https://www.sst-dashboard.netlify.app/:1",
+      "permanent": true
+    }
+  ]
 }
