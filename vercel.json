@@ -1,14 +1,14 @@
 {
   "redirects": [
     {
-      "source": "/(.*)",
+      "source": "/(.*)",  // captures everything after the root
       "has": [
         {
           "type": "host",
           "value": "!seating-sst-dev.vercel.app"
         }
       ],
-      "destination": "https://www.sst-dashboard.netlify.app/:1",
+      "destination": "https://www.sst-dashboard.netlify.app/$1",
       "permanent": true
     }
   ]
