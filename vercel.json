@@ -3,7 +3,7 @@
     "redirects": [
         {
             "source": "/(.*)",
-            "destination": "https://sst-dashboard.netlify.app/",
+            "destination": "https://sst-dashboard.netlify.app/seating",
             "permanent": true
         }
     ]
