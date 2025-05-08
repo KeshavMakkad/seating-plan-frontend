@@ -1,7 +1,7 @@
 {
   "redirects": [
     {
-      "source": "/(.*)",  // captures everything after the root
+      "source": "/(.*)",
       "has": [
         {
           "type": "host",
