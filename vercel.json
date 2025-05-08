@@ -1,1 +1,10 @@
-{ "rewrites": [{ "source": "/(.*)", "destination": "/" }] }
+{
+    "rewrites": [{ "source": "/(.*)", "destination": "/" }],
+    "redirects": [
+        {
+            "source": "/(.*)",
+            "destination": "https://www.sst-dashboard.netlify.app/",
+            "permanent": true
+        }
+    ]
+}
