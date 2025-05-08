@@ -1,50 +1,143 @@
-# React + TypeScript + Vite
+# 🪑 Seating Plan Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern **React + TypeScript** web application built with **Vite**, offering a dynamic seating plan interface with theme toggling, search functionality, and class-based filtering.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Overview
 
-## Expanding the ESLint configuration
+This is a responsive frontend application designed to display and manage classroom seating plans. It includes:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React 19 + TypeScript**: Strong typing and the latest React features.
+- **Vite**: Fast development server and optimized production builds.
+- **Tailwind CSS**: Utility-first styling with extended custom themes.
+- **Material UI + Emotion**: Rich UI components with styling flexibility.
+- **React Router DOM**: Client-side routing.
+- **Framer Motion**: Smooth animations.
+- **Lucide React**: Icon support.
+- **Custom Hooks + Context API**: For theme toggling and state management.
+- **ESLint**: With TypeScript and React hooks rules for clean, consistent code.
 
-- Configure the top-level `parserOptions` property like this:
+---
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## ✨ Features
+
+- 🔍 **Search Bar** – Quickly locate seats or student profiles.
+- 🏫 **Class Selection** – Switch views based on classroom selection.
+- 🌗 **Theme Toggle** – Seamless switch between dark and light modes with blur transitions.
+- 🧭 **Routing** – Includes Home, Seating Plan, and a 404 Not Found page.
+- 📱 **Responsive Design** – Optimized for all screen sizes.
+- ⚙️ **State Management** – Context API used for managing themes and data fetching.
+
+---
+
+## 🛠️ Getting Started
+
+### ✅ Prerequisites
+
+- Node.js (version 18 or higher recommended)
+- npm or yarn
+
+### 📦 Installation
+
+```bash
+git clone <repository-url>
+cd keshavmakkad-seating-plan-frontend
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Install dependencies:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+npm install
+# or
+yarn install
 ```
+
+### 🧪 Running the Development Server
+
+Start the Vite development server with hot module replacement:
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+Open your browser and navigate to `http://localhost:5173` (or the port shown in the terminal).
+
+### 🏗️ Building for Production
+
+To generate the optimized production bundle:
+
+```bash
+npm run build
+# or
+yarn build
+```
+
+### 👁️ Previewing the Production Build
+
+Preview the production build locally:
+
+```bash
+npm run preview
+# or
+yarn preview
+```
+
+---
+
+## 🧬 Project Structure
+
+```
+keshavmakkad-seating-plan-frontend/
+├── public/                # Static assets
+├── src/
+│   ├── assets/            # Images, icons, etc.
+│   ├── components/        # Reusable components (Header, Column, Row, etc.)
+│   ├── context/           # Theme, data fetch, and state contexts
+│   ├── pages/             # Page components (Home, SeatingPlanPage, 404)
+│   ├── styles/            # Tailwind and SCSS styles
+│   ├── utils/             # Custom hooks and providers (ThemeProvider, blur)
+│   ├── App.tsx            # App-level routing
+│   └── main.tsx           # React DOM rendering entry point
+├── package.json           # Project dependencies and scripts
+├── vite.config.ts         # Vite configuration with React and Tailwind
+├── tailwind.config.js     # Tailwind theme customization
+├── eslint.config.js       # ESLint setup for TS and React
+├── tsconfig.app.json      # TypeScript config for app code
+├── tsconfig.node.json     # TypeScript config for tooling
+└── README.md              # You're reading it!
+```
+
+---
+
+## 🧰 Technologies Used
+
+- **React 19** with **TypeScript**
+- **Vite** for build tooling and fast dev server
+- **Tailwind CSS** for design system
+- **Material UI + Emotion** for UI components and theming
+- **React Router DOM** for SPA routing
+- **Axios** for API requests
+- **Framer Motion** for animation
+- **Lucide React** for SVG icons
+- **ESLint** with support for TypeScript and React hooks
+
+---
+
+## 📏 ESLint Configuration
+
+- Enforces consistent code quality with TypeScript support
+- Includes `react-hooks` rules and `react-refresh` plugin
+- Automatically catches common issues and suggests improvements
+
+---
+
+## 🎨 Customization Guide
+
+- **Theme Colors:** Defined with CSS variables and configured in `tailwind.config.js`
+- **Routes:** Modify or extend in `src/App.tsx`
+- **Components:** Customize or add reusable components in `src/components/`
+
+---
